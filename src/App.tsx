@@ -174,7 +174,7 @@ export default function Home() {
           <div className="orbit orbit-one" />
           <div className="orbit orbit-two" />
           <div className="mascot-label top"><span>AVATAR_01</span><b>ONLINE</b></div>
-          <img src="/mascot-production.png" alt="Original anime virtual laboratory assistant inside a hologram capsule" />
+          <img src="/mascot-production.webp" alt="Original anime virtual laboratory assistant inside a hologram capsule" />
           <div className="mascot-label bottom"><span>SYNC RATE</span><b>98.7%</b></div>
         </div>
         <div className="scroll-cue"><span>SCROLL TO EXPLORE</span><i /></div>
