@@ -1,8 +1,8 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
-type Language = "en" | "zh";
+type Language = "en" | "zh" | "ja";
 type Category = "all" | "ta" | "embedded" | "interactive";
 
 const projects = [
@@ -10,10 +10,11 @@ const projects = [
     id: "01",
     category: "ta" as Category,
     status: "IN PROGRESS",
-    title: { en: "Shader Study Log", zh: "Shader 学习日志" },
+    title: { en: "Shader Study Log", zh: "Shader 学习日志", ja: "シェーダー学習ログ" },
     description: {
       en: "A growing collection of material, lighting and VFX studies from a 12-month technical art transition.",
       zh: "记录 12 个月技术美术转型过程中的材质、光照与 VFX 练习。",
+      ja: "12か月のテクニカルアート転向で取り組む、マテリアル・ライティング・VFXの学習記録。",
     },
     tags: ["SHADERS", "VFX", "REAL-TIME"],
     tone: "cyan",
@@ -22,10 +23,11 @@ const projects = [
     id: "02",
     category: "embedded" as Category,
     status: "PROTOTYPE",
-    title: { en: "ESP32-C3 Remote Car", zh: "ESP32-C3 蓝牙遥控小车" },
+    title: { en: "ESP32-C3 Remote Car", zh: "ESP32-C3 蓝牙遥控小车", ja: "ESP32-C3 リモートカー" },
     description: {
       en: "A four-motor prototype combining Bluetooth control, ultrasonic avoidance and PID speed regulation.",
       zh: "结合蓝牙控制、超声波避障与 PID 调速的四电机原型。",
+      ja: "Bluetooth制御、超音波障害物回避、PID速度制御を組み合わせた4モーター試作機。",
     },
     tags: ["ESP32", "PID", "SENSORS"],
     tone: "blue",
@@ -34,10 +36,11 @@ const projects = [
     id: "03",
     category: "interactive" as Category,
     status: "EXPERIMENT",
-    title: { en: "Multi-node Sensor Network", zh: "多节点感知网络" },
+    title: { en: "Multi-node Sensor Network", zh: "多节点感知网络", ja: "マルチノード・センサーネットワーク" },
     description: {
       en: "ESP-NOW nodes combine vibration and radar sensing with a visual control interface and alerts.",
       zh: "通过 ESP-NOW 连接振动与雷达传感节点，并提供可视化控制和报警反馈。",
+      ja: "ESP-NOWで振動・レーダーセンサーを接続し、可視化操作とアラートを実現するネットワーク。",
     },
     tags: ["ESP-NOW", "RADAR", "UI"],
     tone: "coral",
@@ -46,10 +49,11 @@ const projects = [
     id: "04",
     category: "embedded" as Category,
     status: "LAB BUILD",
-    title: { en: "Zigbee Environment Link", zh: "Zigbee 环境监测链路" },
+    title: { en: "Zigbee Environment Link", zh: "Zigbee 环境监测链路", ja: "Zigbee 環境モニタリング" },
     description: {
       en: "A CC2530 coordinator-router system for serial control, device feedback and DHT11 telemetry.",
       zh: "基于 CC2530 协调器与路由器，实现串口控制、设备反馈和 DHT11 数据回传。",
+      ja: "CC2530のコーディネーターとルーターで、シリアル制御・機器フィードバック・DHT11計測を行うシステム。",
     },
     tags: ["ZIGBEE", "CC2530", "IOT"],
     tone: "violet",
@@ -62,6 +66,7 @@ const copy = {
     kicker: "PORTFOLIO SYSTEM / ONLINE",
     titleA: "BETWEEN",
     titleB: "ART",
+    titleConnector: "&",
     titleC: "SYSTEMS",
     subtitle: "Technical Artist in Training · Real-time Graphics · VR · Interactive Systems",
     primary: "EXPLORE PROJECTS",
@@ -93,6 +98,7 @@ const copy = {
     kicker: "个人作品集系统 / 在线",
     titleA: "游走于",
     titleB: "艺术",
+    titleConnector: "&",
     titleC: "系统之间",
     subtitle: "技术美术学习者 · 实时图形 · VR · 交互系统",
     primary: "查看项目",
@@ -119,6 +125,38 @@ const copy = {
     contactBody: "正式发布前将在这里接入邮箱和社交主页。",
     contactButton: "返回项目",
   },
+  ja: {
+    nav: ["作品", "ラボログ", "プロフィール"],
+    kicker: "ポートフォリオ・システム / オンライン",
+    titleA: "アートと",
+    titleB: "技術",
+    titleConnector: "×",
+    titleC: "システム",
+    subtitle: "テクニカルアーティストを目指して · リアルタイムグラフィックス · VR · インタラクティブシステム",
+    primary: "プロジェクトを見る",
+    secondary: "ラボログを見る",
+    learning: "現在学習中：シェーダー & VFX",
+    selected: "注目のプロジェクト",
+    selectedBody: "ビジュアル思考とエンジニアリングが交差する実験。",
+    filters: { all: "すべて", ta: "テクニカルアート", embedded: "組み込み", interactive: "インタラクティブ" },
+    labTitle: "学びのループ",
+    labBody: "毎週ひとつ、小さくても見える成果をつくる。概念、実験、制作物、振り返り。",
+    weeks: [
+      ["第 01 週", "光と法線", "基礎"],
+      ["第 02 週", "マテリアル表現", "次の課題"],
+      ["第 03 週", "SHADER GRAPH", "計画中"],
+      ["第 04 週", "リアルタイム VFX", "計画中"],
+    ],
+    aboutLabel: "プロフィール / 03",
+    aboutTitle: "制御システムからリアルタイムアートへ。",
+    aboutBody:
+      "Jaegerです。オートメーションを学びながら、テクニカルアートへの転向を目指しています。コード、ハードウェア、ビジュアルインタラクションをつなぎ、VRとリアルタイム体験を長期的なテーマにしています。",
+    disciplines: ["オートメーション", "リアルタイムグラフィックス", "インタラクティブシステム", "VR / XR"],
+    contactLabel: "次の接続",
+    contactTitle: "生命を感じる体験を、一緒につくろう。",
+    contactBody: "公開前にメールとソーシャルリンクを追加する予定です。",
+    contactButton: "プロジェクト一覧",
+  },
 };
 
 export default function Home() {
@@ -126,6 +164,9 @@ export default function Home() {
   const [filter, setFilter] = useState<Category>("all");
   const [menuOpen, setMenuOpen] = useState(false);
   const t = copy[language];
+  useEffect(() => {
+    document.documentElement.lang = language === "zh" ? "zh-CN" : language;
+  }, [language]);
   const visibleProjects = useMemo(
     () => projects.filter((project) => filter === "all" || project.category === filter),
     [filter],
@@ -144,9 +185,19 @@ export default function Home() {
           <a href="#about" onClick={() => setMenuOpen(false)}>{t.nav[2]}</a>
         </nav>
         <div className="header-actions">
-          <button className="language-switch" onClick={() => setLanguage(language === "en" ? "zh" : "en")} aria-label="Switch language">
-            {language === "en" ? "中文" : "EN"}
-          </button>
+          <div className="language-picker" role="group" aria-label="Language selection">
+            {(["en", "zh", "ja"] as Language[]).map((code) => (
+              <button
+                type="button"
+                key={code}
+                className={language === code ? "active" : ""}
+                aria-pressed={language === code}
+                onClick={() => setLanguage(code)}
+              >
+                {code === "en" ? "EN" : code === "zh" ? "中" : "日"}
+              </button>
+            ))}
+          </div>
           <button className="menu-button" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle navigation" aria-expanded={menuOpen}>
             <span /><span />
           </button>
@@ -160,7 +211,7 @@ export default function Home() {
           <div className="eyebrow"><span className="signal-dot" />{t.kicker}</div>
           <h1>
             <span>{t.titleA}</span>
-            <span>{t.titleB} <em>&amp;</em> {t.titleC}</span>
+            <span>{t.titleB} <em>{t.titleConnector}</em> {t.titleC}</span>
           </h1>
           <p className="hero-subtitle">{t.subtitle}</p>
           <div className="hero-actions">
